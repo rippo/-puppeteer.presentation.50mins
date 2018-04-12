@@ -20,7 +20,5 @@ describe('When looking at the performance', () => {
             () => window.performance.now()
         );
         expect(timeElasped).to.be.at.most(1500);
-
-
     }));
 });

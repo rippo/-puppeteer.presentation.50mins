@@ -2,7 +2,7 @@
 
 Slides can be found at:
 
-https://slides.com/rippo/headless-testing-with-puppeteer/
+https://slides.com/rippo/headless-testing-with-puppeteer-50mins
 
 To install type
 

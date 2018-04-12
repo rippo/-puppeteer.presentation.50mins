@@ -1,51 +1,30 @@
 const { expect } = require('chai');
 const { test } = require('../browser');
 
-describe('When viewing the counter page ', () => {
+describe('When fetching the weather data', () => {
 
-    let page;
+    it('it shows the next five days', test(async (browser, opts) => {
 
-    //Lets make sure we are on the counter page 
-    it('it shows the H1 Counter', test(async (browser, opts) => {
+        const page = await browser.newPage();
+        await page.goto(`${opts.appUrl}/fetchdata`);
 
-        page = await browser.newPage();
-        await page.goto(`${opts.appUrl}/counter`);
+        //My rule of thumb for any UI testing framework is:-
+        //Every time you ask for a new resource, button click, 
+        //  page goto form post then ALWAYS do a waitForXXX.
+        //Even if documentation says you shouldn't need to!
+        //Will sort out 99% of you issues!
+        //  Caveat - FALL THROUGH!
+        await page.waitForSelector('table#result');
 
-        await page.waitForSelector('H1');
+        //Count of TDS in table, crude but works!
+        const data = await page.$$eval('table#result tbody tr td', 
+            td => td.map(td => {
+                return td.innerHTML;
+            })
+        );
 
-        const innerText = await page.$eval('H1', h1 => {
-            return h1.innerText;
-        });
-
-        expect(innerText).to.be.equal('Counter');
+        //5 rows 4 columns = 20
+        expect(data.length).to.be.equal(20);
 
     }));
-
-    //clickity click time!
-    it('and when clicking the counter it increases to 1', test(async (browser, opts) => {
-        const counter = await clickCounter();
-        expect(counter).to.be.equal('1');
-    }));
-
-    //clickity time again!
-    it('and when clicking the counter it increases to 2', test(async (browser, opts) => {
-        const counter = await clickCounter();
-        expect(counter).to.be.equal('2');
-    }));
-
-    //what more clickity clicking, c'mon!
-    it('and when clicking the counter it increases to 3', test(async (browser, opts) => {
-        const counter = await clickCounter();
-        expect(counter).to.be.equal('3');
-    }));
-
-    async function clickCounter() {
-        await page.click("button.btn");
-        return await page.$eval('h2 strong', h2 => {
-            return h2.innerText;
-        });
-    };
- 
-    
 });
-

@@ -1,30 +1,40 @@
-const { expect } = require('chai');
-const { test } = require('../browser');
+const {expect } = require('chai'); 
+const {test } = require('../browser'); 
+const options = require('../options');
+const path = require('path'); 
+const looksSame = require('looks-same');
 
-describe('When fetching the weather data', () => {
+describe('When I take a screenshot of the home page', () =>  {
 
-    it('it shows the next five days', test(async (browser, opts) => {
+    //Image we are going to download
+    let downloadedImage = path.join(__dirname, '../images/home.png'); 
 
-        const page = await browser.newPage();
-        await page.goto(`${opts.appUrl}/fetchdata`);
+    //The image we are going to compare against
+    let baseImage = path.join(__dirname, '../images/ORG-home-headless.png'); 
 
-        //My rule of thumb for any UI testing framework is:-
-        //Every time you ask for a new resource, button click, 
-        //  page goto form post then ALWAYS do a waitForXXX.
-        //Even if documentation says you shouldn't need to!
-        //Will sort out 99% of you issues!
-        //  Caveat - FALL THROUGH!
-        await page.waitForSelector('table#result');
+    //There seems to be a difference between chromium in headless
+    //  and normal mode. So if showing the browser use the non
+    //  headless image
+    if (!options.puppeteer.headless) {
+        baseImage = path.join(__dirname, '../images/ORG-home.png'); 
+    }
 
-        //Count of TDS in table, crude but works!
-        const data = await page.$$eval('table#result tbody tr td', 
-            td => td.map(td => {
-                return td.innerHTML;
-            })
-        );
-
-        //5 rows 4 columns = 20
-        expect(data.length).to.be.equal(20);
-
+    //save home page as an image
+    it('it returns a buffer', test(async (browser, opts) =>  {
+        let page = await browser.newPage(); 
+        await page.goto(`${opts.appUrl}`); 
+        await page.waitFor('h1'); 
+        const screen = await page.screenshot( {path:'./images/home.png'}); 
+        expect(screen).to.not.equal(null);
     }));
-});
+
+    it('it should be same as the original image', (done) => {
+        looksSame(downloadedImage, baseImage, (error, equal) => {
+            expect(error).to.equal(null);
+            expect(equal).to.equal(true);
+            done();
+        });
+    });    
+
+}); 
+
