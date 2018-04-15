@@ -20,5 +20,10 @@ describe('When looking at the performance', () => {
             () => window.performance.now()
         );
         expect(timeElasped).to.be.at.most(1500);
+
+        // const metrics = await page.metrics();
+        // console.log(metrics);
+        // //lets get how long the page took to run the scripts
+        // expect(metrics.ScriptDuration).to.be.at.most(0.50);
     }));
 });

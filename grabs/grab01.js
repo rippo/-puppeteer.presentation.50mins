@@ -1,9 +1,7 @@
-'use strict'; 
-
 const options = require('../options');
 const puppeteer = require('puppeteer'); 
 
-async function run() {
+(async () => {
 
     const browser = await puppeteer.launch( {
         headless: options.puppeteer.headless,
@@ -17,7 +15,7 @@ async function run() {
     const page = await browser.newPage(); 
 
     //DEFAULT Viewport size is 800 x 600
-    await page.setViewport({ width:480, height:800});
+    //await page.setViewport({ width:480, height:800});
     //await page.setViewport({ width:1024, height:800});
 
     await page.goto('http://localhost:5000');
@@ -29,13 +27,11 @@ async function run() {
     // ElementHandles can be created with the page.$ method.
     // Seems to have an issue of clipping if browser is not
     //  in headless mode!
-    // var element = await page.$('div.col-md-9');
-    // await element.screenshot({
-    //    path:'./grabs/rhs-content.png',
-    // }); 
+     var element = await page.$('div.col-md-9');
+     await element.screenshot({
+        path:'./grabs/rhs-content.png',
+     }); 
 
     await browser.close(); 
 
-}; 
-
-run(); 
+})(); 

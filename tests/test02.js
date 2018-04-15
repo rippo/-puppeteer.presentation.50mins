@@ -19,12 +19,11 @@ describe('When fetching the weather data', () => {
         //Count of TDS in table, crude but works!
         const data = await page.$$eval('table#result tbody tr td', 
             td => td.map(td => {
-                return td.innerHTML;
+                return td.innerText;
             })
         );
 
         //5 rows 4 columns = 20
         expect(data.length).to.be.equal(20);
-
     }));
 });

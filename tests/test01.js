@@ -3,11 +3,9 @@ const { test } = require('../browser');
 
 describe('When viewing the home page', () => {
 
-    let page;
-
     it('it shows Hello from Rippo!', test(async (browser, opts) => {
 
-        page = await browser.newPage();
+        let page = await browser.newPage();
         //notice we are using ES6 Template Strings
         await page.goto(`${opts.appUrl}`);
 
