@@ -22,7 +22,10 @@ describe('When I take a screenshot of the home page', () => {
     //save home page as an image
     it('it returns a buffer', test(async (browser, opts) => {
         let page = await browser.newPage();
+        await page.setViewport({ width:800, height:600});
+
         await page.goto(`${opts.appUrl}`);
+
         await page.waitFor('h1');
         const screen = await page.screenshot(
             { path: downloadedImage });
@@ -49,6 +52,5 @@ describe('When I take a screenshot of the home page', () => {
             expect(equal).to.equal(true);
             done();
         });
-
     });
 });

@@ -12,6 +12,7 @@ async function run() {
     }); 
 
     const page = await browser.newPage(); 
+    await page.setViewport({ width:800, height:600});
 
     await page.goto('http://localhost:5000');
 
