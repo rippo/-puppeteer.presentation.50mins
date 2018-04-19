@@ -18,7 +18,7 @@ describe('When fetching the weather data', () => {
 
         //Count of TDS in table, crude but works!
         const data = await page.$$eval('table#result tbody tr td', 
-            td => td.map(td => {
+            tds => tds.map(td => {
                 return td.innerText;
             })
         );
