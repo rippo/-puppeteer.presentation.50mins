@@ -27,10 +27,10 @@ const puppeteer = require('puppeteer');
     // ElementHandles can be created with the page.$ method.
     // Seems to have an issue of clipping if browser is not
     //  in headless mode!
-     var element = await page.$('div.col-md-9');
-     await element.screenshot({
-        path:'./grabs/rhs-content.png',
-     }); 
+    //  var element = await page.$('div.col-md-9');
+    //  await element.screenshot({
+    //     path:'./grabs/rhs-content.png',
+    //  }); 
 
     await browser.close(); 
 
