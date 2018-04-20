@@ -23,7 +23,7 @@ describe('When looking at the performance', () => {
 
         //const metrics = await page.metrics();
         //console.log(metrics);
-        //lets get how long the page took to run the scripts
-        //expect(metrics.ScriptDuration).to.be.at.most(0.20);
+        ////lets get how long the page took to run the scripts
+        //expect(metrics.ScriptDuration).to.be.at.most(0.10);
     }));
 });
